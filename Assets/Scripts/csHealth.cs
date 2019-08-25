@@ -21,6 +21,7 @@ public class csHealth : MonoBehaviour {
     public void TakeDamage(GameObject playerFrom, int amount)
     {
         currentHealth -= amount;
+        OnChangeHealth();
         // network
     }
 

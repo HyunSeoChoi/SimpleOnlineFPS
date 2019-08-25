@@ -20,8 +20,10 @@ public class csEnemySpawner : MonoBehaviour {
 
             csSpawnPoint enemySpawnPoint = (Instantiate(spawnPoint, spawnPosition, spawnRotation) as GameObject).GetComponent<csSpawnPoint>();
             enemySpawnPoints.Add(enemySpawnPoint);
-        }	
-	}
+        }
+
+        SpawnEnemies();
+    }
 
     public void SpawnEnemies(/* networking */)
     {
@@ -41,9 +43,8 @@ public class csEnemySpawner : MonoBehaviour {
 
             h.currentHealth = 100;
             h.OnChangeHealth();
-
+            h.destroyOnDeath = true;
             h.isEnemy = true;
-            i++;
         }
     }
 }
