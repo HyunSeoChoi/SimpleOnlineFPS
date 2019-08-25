@@ -5,6 +5,6 @@ using UnityEngine;
 public class csBillboard : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
-        
-	}
+        transform.LookAt(Camera.main.transform);
+    }
 }
