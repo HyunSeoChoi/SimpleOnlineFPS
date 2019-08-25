@@ -408,6 +408,23 @@ Prefab:
       propertyPath: m_RootOrder
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 114311518618428018, guid: 80c80d114b315004987b78eb30b048bc,
+        type: 2}
+      propertyPath: spawnPoint
+      value: 
+      objectReference: {fileID: 1712557796172576, guid: f1f02e40c0f198e4ca05b7502592cfc4,
+        type: 2}
+    - target: {fileID: 114311518618428018, guid: 80c80d114b315004987b78eb30b048bc,
+        type: 2}
+      propertyPath: enemy
+      value: 
+      objectReference: {fileID: 1255417133882876, guid: c22764f0890b91842956a0ac10abd553,
+        type: 2}
+    - target: {fileID: 114311518618428018, guid: 80c80d114b315004987b78eb30b048bc,
+        type: 2}
+      propertyPath: numbetOfEnemies
+      value: 4
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 80c80d114b315004987b78eb30b048bc, type: 2}
   m_IsPrefabAsset: 0
