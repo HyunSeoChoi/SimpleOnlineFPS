@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using SocketIO;
 
 public class csNetworkManager : MonoBehaviour {
 
     static public csNetworkManager instance;
     public Canvas canvas;
-    // public socketIOComponent socket;
+    public SocketIOComponent socket;
     public InputField playerNameInput;
     public GameObject player;
 
@@ -22,6 +23,19 @@ public class csNetworkManager : MonoBehaviour {
             DontDestroyOnLoad(gameObject);
         }
     }
+
+    public void Start()
+    {
+        socket.On("enemies", OnEnemies);
+        socket.On("other player connected", OnOtherPlayerConnected);
+        socket.On("play", OnPlay);
+        socket.On("player move", OnPlayerMove);
+        socket.On("player turn", OnPlayerTurn);
+        socket.On("player shoot", OnPlayerShoot);
+        socket.On("health", OnHealth);
+        socket.On("other player disconnected", OnOtherPlayerDisconnected);
+    }
+
 
     public void JoinGame()
     {
@@ -39,10 +53,50 @@ public class csNetworkManager : MonoBehaviour {
 
     #region Listening
 
+    void OnEnemies(SocketIOEvent socketIOEvent)
+    {
+
+    }
+
+    void OnOtherPlayerConnected(SocketIOEvent socketIOEvent)
+    {
+
+    }
+
+    void OnPlay(SocketIOEvent socketIOEvent)
+    {
+
+    }
+
+    void OnPlayerMove(SocketIOEvent socketIOEvent)
+    {
+
+    }
+
+    void OnPlayerTurn(SocketIOEvent socketIOEvent)
+    {
+
+    }
+
+    void OnPlayerShoot(SocketIOEvent socketIOEvent)
+    {
+
+    }
+
+    void OnHealth(SocketIOEvent socketIOEvent)
+    {
+
+    }
+
+    void OnOtherPlayerDisconnected(SocketIOEvent socketIOEvent)
+    {
+
+    }
+
     #endregion
 
     #region JSONMessageClasses
-    
+
     [SerializeField]
     public class PlayerJSON
     {
