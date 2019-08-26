@@ -47,6 +47,22 @@ public class csNetworkManager : MonoBehaviour {
     IEnumerator ConnectToServer()
     {
         yield return new WaitForSeconds(0.5f);
+
+        socket.Emit("player connect");
+
+        yield return new WaitForSeconds(1f);
+
+        string playerName = playerNameInput.text;
+        List<csSpawnPoint> playerSpawnPoints = GetComponent<csPlayerSpawner>().playerSpawnPoints;
+        List<csSpawnPoint> enemySpawnPoints = GetComponent<csEnemySpawner>().enemySpawnPoints;
+
+        PlayerJSON playerJSON = new PlayerJSON(playerName, playerSpawnPoints, enemySpawnPoints);
+
+        string data = JsonUtility.ToJson(playerJSON);
+
+        socket.Emit("play", new JSONObject(data));
+
+        canvas.gameObject.SetActive(false);
     }
 
     #endregion

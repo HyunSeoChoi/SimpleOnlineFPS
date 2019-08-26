@@ -81,6 +81,7 @@ io.on("connection", function(socket) {
         currentPlayer.name + "emit : play :" + JSON.stringify(currentPlayer)
       );
 
+      socket.emit("play", currentPlayer);
       socket.broadcast.emit("other player connected", currentPlayer);
     }
   });
@@ -137,32 +138,40 @@ io.on("connection", function(socket) {
       }
 
       var response = {
-          name : (!data.isEnemy)?clients[indexDamaged].name : enemies[indexDamaged].name,
-          health: (!data.isEnemy)?clients[indexDamaged].health:enemies[indexDamaged].health
+        name: !data.isEnemy
+          ? clients[indexDamaged].name
+          : enemies[indexDamaged].name,
+        health: !data.isEnemy
+          ? clients[indexDamaged].health
+          : enemies[indexDamaged].health
       };
 
-      console.log(currentPlayer.name + 'bcst : health: ' + JSON.stringify(response));
+      console.log(
+        currentPlayer.name + "bcst : health: " + JSON.stringify(response)
+      );
 
-      socket.emit('health', data);
-      socket.broadcast.emit('health', data);
+      socket.emit("health", data);
+      socket.broadcast.emit("health", data);
     }
   });
 
+  socket.on("disconnected", function() {
+    console.log(currentPlayer.name + "recv : disconnect " + currentPlayer.name);
 
-  socket.on('disconnected', function() {
-      console.log(currentPlayer.name + 'recv : disconnect ' + currentPlayer.name);
+    socket.broadcast.emit("other player disconnected", currentPlayer);
 
-      socket.broadcast.emit('other player disconnected', currentPlayer);
-      
-      console.log(currentPlayer.name + 'bcst: other player disconnected' + JSON.stringify(currentPlayer));
+    console.log(
+      currentPlayer.name +
+        "bcst: other player disconnected" +
+        JSON.stringify(currentPlayer)
+    );
 
-      for(var i= 0;i<clients.length;i++)
-      {
-          if(clients[i].name === currentPlayer.name){
-              clients.splice(i,1);
-          }
+    for (var i = 0; i < clients.length; i++) {
+      if (clients[i].name === currentPlayer.name) {
+        clients.splice(i, 1);
       }
-  })
+    }
+  });
 });
 
 console.log("----server is running----");
