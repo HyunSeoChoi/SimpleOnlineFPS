@@ -1,21 +1,24 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using System.Collections;
 
-public class Bullet : MonoBehaviour
-{
-    [HideInInspector]
-    public GameObject playerFrom;
+public class Bullet : MonoBehaviour {
 
-    private void OnCollisionEnter(Collision collision)
+    private void Update()
     {
-        var hit = collision.gameObject;
-        var health = hit.GetComponent<Health>();
-        if(health!=null)
-        {
-            health.TakeDamage(playerFrom, 10);
-        }
-
-        Destroy(gameObject);
+        transform.Translate(0f, 10f * Time.deltaTime, 0f);
     }
+    [HideInInspector]
+	public GameObject playerFrom;
+
+	void OnCollisionEnter(Collision collision)
+	{
+		var hit = collision.gameObject;
+		var health = hit.GetComponent<Health>();
+		if (health != null)
+		{
+			health.TakeDamage(playerFrom, 10);
+		}
+
+		Destroy(gameObject);
+	}
 }

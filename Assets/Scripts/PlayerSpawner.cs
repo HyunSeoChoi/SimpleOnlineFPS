@@ -1,8 +1,8 @@
-﻿using System.Collections;
+﻿using UnityEngine;
+using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 
-public class PlayerSpawner : MonoBehaviour
-{
-    public List<SpawnPoint> playerSpawnPoints;
+public class PlayerSpawner : MonoBehaviour {
+
+	public List<SpawnPoint> playerSpawnPoints;
 }

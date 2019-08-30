@@ -1,65 +1,70 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using System.Collections;
 
-public class PlayerController : MonoBehaviour
-{
-    public GameObject bulletPrefab;
-    public Transform bulletSpawn;
-    public bool isLocalPlayer = true;
+public class PlayerController : MonoBehaviour {
 
-    Vector3 oldPosition;
-    Vector3 currentPosition;
-    Quaternion oldRotation;
-    Quaternion currentRotation;
-    // Start is called before the first frame update
-    void Start()
-    {
-        oldPosition = transform.position;
-        currentPosition = oldPosition;
-        oldRotation = transform.rotation;
-        currentRotation = oldRotation;
-    }
+	public GameObject bulletPrefab;
+	public Transform bulletSpawn;
+	public bool isLocalPlayer = false;
 
-    // Update is called once per frame
-    void Update()
-    {
-        if(!isLocalPlayer)
-        {
-            return;
-        }
+	Vector3 oldPosition;
+	Vector3 currentPosition;
+	Quaternion oldRotation;
+	Quaternion currentRotation;
 
-        var x = Input.GetAxis("Horizontal") * Time.deltaTime * 150.0f;
-        var z = Input.GetAxis("Vertical") * Time.deltaTime * 3.0f;
+	// Use this for initialization
+	void Start () {
+		oldPosition = transform.position;
+		currentPosition = oldPosition;
+		oldRotation = transform.rotation;
+		currentRotation = oldRotation;
+	}
+	
+	// Update is called once per frame
+	void Update () {
+		if (!isLocalPlayer) {
+			return;
+		}
 
-        transform.Rotate(0, x, 0);
-        transform.Translate(0, 0, z);
+		var x = Input.GetAxis ("Horizontal") * Time.deltaTime * 150.0f;
+		var z = Input.GetAxis ("Vertical") * Time.deltaTime * 3.0f;
 
-        currentPosition = transform.position;
-        currentRotation = transform.rotation;
+		transform.Rotate (0, x, 0);
+		transform.Translate (0, 0, z);
 
-        if(currentPosition != oldPosition)
-        {
-            oldPosition = currentPosition;
-        }
-        if(currentRotation != oldRotation)
-        {
-            oldRotation = currentRotation;
-        }
-        
-        if(Input.GetKeyDown(KeyCode.Space))
-        {
-            CmdFire();
-        }
-    }
+		currentPosition = transform.position;
+		currentRotation = transform.rotation;
 
-    public void CmdFire()
-    {
-        var bullet = Instantiate(bulletPrefab, bulletSpawn.position, bulletSpawn.rotation) as GameObject;
-        Bullet b = bullet.GetComponent<Bullet>();
-        //b.playerFrom = this.gameObject;
-        bullet.GetComponent<Rigidbody>().velocity = bullet.transform.up * 6;
+		if (currentPosition != oldPosition) {
+			NetworkManager.instance.GetComponent<NetworkManager>().CommandMove(transform.position);
+			oldPosition = currentPosition;
+		}
 
-        Destroy(bullet, 2.0f); 
-    }
+		if (currentRotation != oldRotation) {
+			NetworkManager.instance.GetComponent<NetworkManager>().CommandTurn(transform.rotation);
+			oldRotation = currentRotation;
+		}
+
+		if (Input.GetKeyDown (KeyCode.Space)) {
+			NetworkManager n = NetworkManager.instance.GetComponent<NetworkManager>();
+			n.CommandShoot();
+		}
+	}
+
+	public void CmdFire() {
+		var bullet = Instantiate(bulletPrefab, 
+		                         bulletSpawn.position, 
+		                         bulletSpawn.rotation) as GameObject;
+
+		Bullet b = bullet.GetComponent<Bullet>();
+		b.playerFrom = this.gameObject;
+
+        Debug.Log(bullet.GetComponent<Rigidbody>().velocity);
+		bullet.GetComponent<Rigidbody>().velocity = bullet.transform.up * 5;
+
+        Debug.Log(bullet.GetComponent<Rigidbody>().velocity);
+
+        Destroy(bullet, 10.0f);
+
+	}
 }
