@@ -3,11 +3,7 @@ using System.Collections;
 
 public class Bullet : MonoBehaviour {
 
-    private void Update()
-    {
-        transform.Translate(0f, 10f * Time.deltaTime, 0f);
-    }
-    [HideInInspector]
+	[HideInInspector]
 	public GameObject playerFrom;
 
 	void OnCollisionEnter(Collision collision)

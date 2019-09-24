@@ -58,13 +58,9 @@ public class PlayerController : MonoBehaviour {
 
 		Bullet b = bullet.GetComponent<Bullet>();
 		b.playerFrom = this.gameObject;
+		bullet.GetComponent<Rigidbody>().velocity = bullet.transform.up * 6;
 
-        Debug.Log(bullet.GetComponent<Rigidbody>().velocity);
-		bullet.GetComponent<Rigidbody>().velocity = bullet.transform.up * 5;
-
-        Debug.Log(bullet.GetComponent<Rigidbody>().velocity);
-
-        Destroy(bullet, 10.0f);
+		Destroy(bullet, 2.0f);
 
 	}
 }
